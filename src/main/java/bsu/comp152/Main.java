@@ -22,7 +22,9 @@ public class Main {
         Card c2 = new Card(Card.ACE, Card.DIAMONDS);
         Card c3 = new Card(Card.KING, Card.SPADES);
         Card c4 = new Card(10, Card.CLUBS);
-        Card c5 = new Card(10, Card.HEARTS);
+        // In place of inline initialization, we can split up the declaration and assignment.
+        Card c5;
+        c5 = new Card(10, Card.HEARTS);
 
         System.out.println(Card.ACE);
         System.out.println(c1.getRank());
@@ -35,5 +37,25 @@ public class Main {
         System.out.println(c2.getAbbrev());
         System.out.println(c3);
         System.out.println(c3.getAbbrev());
+
+        Hand h = new Hand(15);
+        System.out.printf("Hand h has %d cards.\n", h.getNumCards());
+        System.out.println(h);
+        System.out.printf("The total value of h is %d.\n", h.getTotalValue());
+        h.addCard(c1);
+        System.out.println(h);
+        System.out.printf("The total value of h is %d.\n", h.getTotalValue());
+        h.addCard(c2);
+        System.out.println(h);
+        System.out.printf("The total value of h is %d.\n", h.getTotalValue());
+        h.addCard(c3);
+        System.out.println(h);
+        System.out.printf("The total value of h is %d.\n", h.getTotalValue());
+        h.addCard(c4);
+        System.out.println(h);
+        System.out.printf("The total value of h is %d.\n", h.getTotalValue());
+        h.addCard(c5);
+        System.out.println(h);
+        System.out.printf("The total value of h is %d.\n", h.getTotalValue());
     }
 }
