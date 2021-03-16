@@ -57,5 +57,11 @@ public class Main {
         h.addCard(c5);
         System.out.println(h);
         System.out.printf("The total value of h is %d.\n", h.getTotalValue());
+
+        System.out.println("Play the card in position 1: " + h.playCard(1));
+        System.out.println(h);
+        System.out.println("Play the card in position 2: " + h.playCard(2));
+        h.playCard(2);
+        System.out.println(h);
     }
 }

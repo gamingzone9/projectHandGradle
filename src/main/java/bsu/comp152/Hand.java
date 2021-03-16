@@ -106,4 +106,27 @@ public class Hand {
         }
         return str + "]";
     }
+
+    /**
+     * A method to take an index i and play the card at that position in the cards array
+     * @param i
+     * @return
+     */
+    public Card playCard(int i){
+        /* To do:
+         * If the index specified by the parameter is invalid or
+         * if there is no card at the specified position in the array,
+         * throw an IllegalArgumentException.
+         */
+        Card playedCard = cards[i];
+        /* Shift over any cards that come after the removed card in the array
+         * so as to fill in the "gap" created by the removed card.
+         */
+        for (int j = i; j < numCards-1; j++) {
+            cards[j] = cards[j + 1];
+        }
+        // Make any other change needed to the state of the Hand object:
+        numCards -= 1; // Decrement the number of cards in the Hand.
+        return playedCard;
+    }
 }
