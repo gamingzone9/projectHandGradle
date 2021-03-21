@@ -9,7 +9,6 @@ import java.util.Arrays;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.ArrayMatching.arrayContaining;
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class HandTest {

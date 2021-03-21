@@ -63,5 +63,15 @@ public class Main {
         System.out.println("Play the card in position 2: " + h.playCard(2));
         h.playCard(2);
         System.out.println(h);
+
+        Hand h2 = new Hand(15);
+        Card card1 = new Card(3, Card.SPADES);
+        h2.addCard(card1);
+        Card card2 = new Card(4, Card.CLUBS);
+        h2.addCard(card2);
+        Card card3 = new Card(4, Card.HEARTS);
+        h2.addCard(card3);
+        System.out.println(h2);
+        System.out.println(h2.highCard());
     }
 }

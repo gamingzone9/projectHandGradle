@@ -58,10 +58,12 @@ public class Hand {
      * @param newCard
      */
     public void addCard(Card newCard){
-        // To do:
-        // If the parameter is null, the method should throw an IllegalArgumentException.
-        // To do:
-        // If the array is full, the method should throw an IllegalStateException.
+        if (newCard == null){
+            throw new IllegalArgumentException("You can't add a null card.");
+        }
+        if (numCards == cards.length){
+            throw new IllegalStateException("You can't add a card to a full array.");
+        }
         /* Put the new card in the next available position in the array --
          * filling the array from left to right:
          */
@@ -78,16 +80,35 @@ public class Hand {
         int totalValue = 0;
         // If the the Hand is not empty, the loop iterates 0 times.
         for (int i = 0; i < numCards; i++) {
-        /* Don't loop through element-by-element with:
-         * for (Card c : cards)
-         * . Belated thank you, Talia!!
-         * That loop would make c = cards[i] = null for i >= numCards!
-         * Ex: cards = {2D, AD, KS, 10C, 10H, null, null, null, null,
-         * null, null, null, null, null, null}
-         */
+            /* Don't loop through element-by-element with:
+             * for (Card c : cards)
+             * . Belated thank you, Talia!!
+             * That loop would make c = cards[i] = null for i >= numCards!
+             * Ex: cards = {2D, AD, KS, 10C, 10H, null, null, null, null,
+             * null, null, null, null, null, null}
+             */
             totalValue = totalValue + cards[i].getValue();
         }
         return totalValue;
+    }
+
+    /**
+     * A method to take an index i and return the card at that position in the cards array
+     * @param i
+     * @return
+     */
+    public Card getCard(int i){
+        /*
+         * If the index is invalid or if there is no card at the specified position in the array,
+         * throw an IllegalArgumentException.
+         */
+        if ((i < 0) || (i >= numCards)){
+            throw new IllegalArgumentException("Index specified by the parameter is invalid.");
+        }
+        if (cards[i] == null){
+            throw new IllegalArgumentException("There is no card at the specified position in the array.");
+        }
+        return cards[i];
     }
 
     /**
@@ -113,11 +134,17 @@ public class Hand {
      * @return
      */
     public Card playCard(int i){
-        /* To do:
+        /*
          * If the index specified by the parameter is invalid or
          * if there is no card at the specified position in the array,
          * throw an IllegalArgumentException.
          */
+        if ((i < 0) || (i >= numCards)){
+            throw new IllegalArgumentException("Index specified by the parameter is invalid.");
+        }
+        if (cards[i] == null){
+            throw new IllegalArgumentException("There is no card at the specified position in the array.");
+        }
         Card playedCard = cards[i];
         /* Shift over any cards that come after the removed card in the array
          * so as to fill in the "gap" created by the removed card.
@@ -126,7 +153,56 @@ public class Hand {
             cards[j] = cards[j + 1];
         }
         // Make any other change needed to the state of the Hand object:
+        cards[numCards - 1] = null; // The card at i = numCards - 1 was moved to the left.
         numCards -= 1; // Decrement the number of cards in the Hand.
         return playedCard;
+    }
+
+    public Card highCard(){
+        // Consider the leftmost card.
+        Card card = cards[0];
+        // Store its value.
+        int cardValue = card.getValue();
+        // The leftmost card is the highest seen so far.
+        Card highestCard = card;
+        // The largest value seen so far is the value of the leftmost card.
+        int largestValue = cardValue;
+        for (int i = 1; i < numCards; i++) {
+            card = cards[i]; // Consider the next card.
+            cardValue = card.getValue();
+            if (cardValue > largestValue) {
+                largestValue = cardValue;
+                highestCard = card;
+            }
+        }
+        return highestCard;
+    }
+
+    public int numCardsOfRank(int rk){
+        int count = 0;
+        for (int i = 0; i < numCards; i++)
+            if (cards[i].getRank() == rk){
+                count++;
+            }
+        return count;
+    }
+
+    /** A method to return whether all of the cards in the Hand have the same suit
+     *
+     * @return
+     */
+    public boolean hasFlush(){
+        /* If there is a flush, figure out what suit it is by
+         * looking at the leftmost card.
+         */
+        int targetSuit = cards[0].getSuit();
+        // Loop through all the cards in the hand.
+        for (int i = 1; i < numCards; i++)
+            // If the suit differs from the suit of the zeroth card, return false.
+            if (cards[i].getSuit() != targetSuit){
+                return false;
+            }
+        // If you haven't returned by now, return true.
+        return true;
     }
 }
