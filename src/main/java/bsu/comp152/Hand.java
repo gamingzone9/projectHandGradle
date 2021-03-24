@@ -36,7 +36,7 @@ public class Hand {
      * A constructor that takes a single integer parameter specifying the maximum number
      * of cards that the hand holds
      */
-    public Hand(int maxCards){
+    public Hand(int maxCards) {
         /* Create an array that is capable of storing the specified number of cards, and
          * assign it to the field cards:
          */
@@ -45,23 +45,25 @@ public class Hand {
         numCards = 0;
     }
 
-    /** A method that returns the number of cards that are currently in the hand
+    /**
+     * A method that returns the number of cards that are currently in the hand
      *
      * @return
      */
-    public int getNumCards(){
+    public int getNumCards() {
         return numCards;
     }
 
     /**
      * A method that takes a Card object as a parameter and adds it to the Hand
+     *
      * @param newCard
      */
-    public void addCard(Card newCard){
-        if (newCard == null){
+    public void addCard(Card newCard) {
+        if (newCard == null) {
             throw new IllegalArgumentException("You can't add a null card.");
         }
-        if (numCards == cards.length){
+        if (numCards == cards.length) {
             throw new IllegalStateException("You can't add a card to a full array.");
         }
         /* Put the new card in the next available position in the array --
@@ -76,7 +78,7 @@ public class Hand {
      * A method to compute and return the sum of the values of the cards
      * in the cards array
      */
-    public int getTotalValue(){
+    public int getTotalValue() {
         int totalValue = 0;
         // If the the Hand is not empty, the loop iterates 0 times.
         for (int i = 0; i < numCards; i++) {
@@ -114,10 +116,11 @@ public class Hand {
     /**
      * A method to returns a String representation of the Hand object of the form
      * "[card0, card1, ..., cardn]", where card0, card1, etc. are the abbreviations of the cards in the hand
+     *
      * @return
      */
-    public String toString(){
-        if (numCards == 0){
+    public String toString() {
+        if (numCards == 0) {
             return "[]";
         }
         // If the method hasn't returned yet, there is at least one card in the Hand.
@@ -130,26 +133,27 @@ public class Hand {
 
     /**
      * A method to take an index i and play the card at that position in the cards array
+     *
      * @param i
      * @return
      */
-    public Card playCard(int i){
+    public Card playCard(int i) {
         /*
          * If the index specified by the parameter is invalid or
          * if there is no card at the specified position in the array,
          * throw an IllegalArgumentException.
          */
-        if ((i < 0) || (i >= numCards)){
+        if ((i < 0) || (i >= numCards)) {
             throw new IllegalArgumentException("Index specified by the parameter is invalid.");
         }
-        if (cards[i] == null){
+        if (cards[i] == null) {
             throw new IllegalArgumentException("There is no card at the specified position in the array.");
         }
         Card playedCard = cards[i];
         /* Shift over any cards that come after the removed card in the array
          * so as to fill in the "gap" created by the removed card.
          */
-        for (int j = i; j < numCards-1; j++) {
+        for (int j = i; j < numCards - 1; j++) {
             cards[j] = cards[j + 1];
         }
         // Make any other change needed to the state of the Hand object:
@@ -178,12 +182,18 @@ public class Hand {
         return highestCard;
     }
 
+    /**
+     * A method to take a parameter specifying a rank and return
+     * the number of cards in the Hand with that rank.
+     */
     public int numCardsOfRank(int rk){
         int count = 0;
-        for (int i = 0; i < numCards; i++)
+        for (int i = 0; i < numCards; i++){
+            // If the ith card has the target rank rk, then increment count.
             if (cards[i].getRank() == rk){
                 count++;
-            }
+            };
+        }
         return count;
     }
 
@@ -192,6 +202,10 @@ public class Hand {
      * @return
      */
     public boolean hasFlush(){
+        // An empty hand has no flush.
+        if (numCards == 0){
+            return false;
+        }
         /* If there is a flush, figure out what suit it is by
          * looking at the leftmost card.
          */
@@ -204,5 +218,55 @@ public class Hand {
             }
         // If you haven't returned by now, return true.
         return true;
+    }
+
+    /** A method that returns true if the Hand includes at least one pair of cards with the same rank,
+     * and false if it does not
+     */
+    public boolean hasPair(){
+        // Loop through the ranks 1--13, inclusive.
+        for (int rank = 1; rank < 14; rank++) {
+            // For each rank, see if the numCards of given rank is at least 2 (greater than 1). If it is, return true.
+            // Find the number of cards of the rank. Do this by calling numCards of rank on rank.
+            if (numCardsOfRank(rank) > 1){
+                return true;
+            }
+        }
+        // If I haven't returned yet, then return false.
+        return false;
+    }
+
+    /**
+     * A method to return true if the Hand includes at least three cards with the same rank and false if it does not
+     * @return
+     */
+    public boolean hasThreeOfAKind(){
+        // Loop through the ranks 1--13, inclusive.
+        for (int rank = 1; rank < 14; rank++) {
+            // For each rank, see if the numCards of given rank is at least 2 (greater than 1). If it is, return true.
+            // Find the number of cards of the rank. Do this by calling numCards of rank on rank.
+            if (numCardsOfRank(rank) > 2){
+                return true;
+            }
+        }
+        // If I haven't returned yet, then return false.
+        return false;
+    }
+
+    /**
+     * A method to return true if the Hand includes four cards with the same rank and false if it does not
+     * @return
+     */
+    public boolean hasFourOfAKind() {
+        // Call the numCardsOfRank method on all the ranks 1--13.
+        for (int rank = 1; rank <= 13; rank++) {
+            // If the number of cards of the rank is >= 4, return true.
+            if (numCardsOfRank(rank) >= 4){
+                return true;
+            }
+        }
+        // If we haven't returned true for any of the ranks, then
+        // return false.
+        return false;
     }
 }

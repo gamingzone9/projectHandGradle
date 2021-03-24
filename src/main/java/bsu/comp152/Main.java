@@ -65,13 +65,33 @@ public class Main {
         System.out.println(h);
 
         Hand h2 = new Hand(15);
+
+        System.out.println(h2);
+        System.out.printf("The empty hand has a flush: %b\n", h2.hasFlush());
+
         Card card1 = new Card(3, Card.SPADES);
         h2.addCard(card1);
-        Card card2 = new Card(4, Card.CLUBS);
-        h2.addCard(card2);
-        Card card3 = new Card(4, Card.HEARTS);
-        h2.addCard(card3);
+
         System.out.println(h2);
-        System.out.println(h2.highCard());
+        System.out.printf("The hand of one card has a flush: %b\n", h2.hasFlush());
+        Card card2 = new Card(6, Card.CLUBS);
+        h2.addCard(card2);
+        Card card3 = new Card(6, Card.HEARTS);
+        h2.addCard(card3);
+
+        Card card4 = new Card(Card.KING, Card.SPADES);
+        h2.addCard(card4);
+
+        Card card5 = new Card(6, Card.SPADES);
+        h2.addCard(card5);
+
+        Card card6 = new Card(6, Card.DIAMONDS);
+        h2.addCard(card6);
+
+        System.out.println(h2);
+        System.out.println("The high card is " + h2.highCard());
+
+        System.out.println("The hand has four of a kind: " + h2.hasFourOfAKind());
+        System.out.println("The hand has three of a kind: " + h2.hasThreeOfAKind());
     }
 }
