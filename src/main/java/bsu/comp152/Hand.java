@@ -292,4 +292,28 @@ public class Hand {
         }
         return highestCard;
     }
+
+    /** A method to return the class constant corresponding to the Poker-hand
+     *  classification of the Hand
+     */
+    public int handType(){
+        if (hasFourOfAKind()){
+            return FOUR_OF_A_KIND;
+        }
+        else if (hasFlush()){
+            return FLUSH;
+        }
+        else if (hasThreeOfAKind()){
+            return THREE_OF_A_KIND;
+        }
+        else if (isTwoPairs()){
+            return TWO_PAIRS;
+        }
+        else if (hasPair()){
+            return PAIR;
+        }
+        else{
+            return HIGH_CARD;
+        }
+    }
 }
