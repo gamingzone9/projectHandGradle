@@ -93,5 +93,14 @@ public class Main {
 
         System.out.println("The hand has four of a kind: " + h2.hasFourOfAKind());
         System.out.println("The hand has three of a kind: " + h2.hasThreeOfAKind());
+
+        System.out.println(h2);
+        System.out.println("The hand is a two-pair hand: " + h2.isTwoPairs());
+
+        h2.playCard(5);
+        h2.addCard(new Card(3, Card.DIAMONDS));
+
+        System.out.println(h2);
+        System.out.println("The hand is a two-pair hand: " + h2.isTwoPairs());
     }
 }

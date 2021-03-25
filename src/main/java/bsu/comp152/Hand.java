@@ -162,26 +162,6 @@ public class Hand {
         return playedCard;
     }
 
-    public Card highCard(){
-        // Consider the leftmost card.
-        Card card = cards[0];
-        // Store its value.
-        int cardValue = card.getValue();
-        // The leftmost card is the highest seen so far.
-        Card highestCard = card;
-        // The largest value seen so far is the value of the leftmost card.
-        int largestValue = cardValue;
-        for (int i = 1; i < numCards; i++) {
-            card = cards[i]; // Consider the next card.
-            cardValue = card.getValue();
-            if (cardValue > largestValue) {
-                largestValue = cardValue;
-                highestCard = card;
-            }
-        }
-        return highestCard;
-    }
-
     /**
      * A method to take a parameter specifying a rank and return
      * the number of cards in the Hand with that rank.
@@ -195,6 +175,23 @@ public class Hand {
             };
         }
         return count;
+    }
+
+    /**
+     * A method to return true if the Hand includes four cards with the same rank and false if it does not
+     * @return
+     */
+    public boolean hasFourOfAKind() {
+        // Call the numCardsOfRank method on all the ranks 1--13.
+        for (int rank = 1; rank <= 13; rank++) {
+            // If the number of cards of the rank is >= 4, return true.
+            if (numCardsOfRank(rank) >= 4){
+                return true;
+            }
+        }
+        // If we haven't returned true for any of the ranks, then
+        // return false.
+        return false;
     }
 
     /** A method to return whether all of the cards in the Hand have the same suit
@@ -220,22 +217,6 @@ public class Hand {
         return true;
     }
 
-    /** A method that returns true if the Hand includes at least one pair of cards with the same rank,
-     * and false if it does not
-     */
-    public boolean hasPair(){
-        // Loop through the ranks 1--13, inclusive.
-        for (int rank = 1; rank < 14; rank++) {
-            // For each rank, see if the numCards of given rank is at least 2 (greater than 1). If it is, return true.
-            // Find the number of cards of the rank. Do this by calling numCards of rank on rank.
-            if (numCardsOfRank(rank) > 1){
-                return true;
-            }
-        }
-        // If I haven't returned yet, then return false.
-        return false;
-    }
-
     /**
      * A method to return true if the Hand includes at least three cards with the same rank and false if it does not
      * @return
@@ -254,19 +235,61 @@ public class Hand {
     }
 
     /**
-     * A method to return true if the Hand includes four cards with the same rank and false if it does not
-     * @return
+     * A method to return true if the Hand includes at least two separate pairs of cards with the same rank
+     * and false if it does not.
      */
-    public boolean hasFourOfAKind() {
-        // Call the numCardsOfRank method on all the ranks 1--13.
-        for (int rank = 1; rank <= 13; rank++) {
-            // If the number of cards of the rank is >= 4, return true.
-            if (numCardsOfRank(rank) >= 4){
+    public boolean isTwoPairs(){
+        // Initialize the number of pairs to 0.
+        int numPairs = 0;
+        // Loop through the ranks 1--13, inclusive.
+        for (int rank = 1; rank < 14; rank++) {
+            // For each rank, see if the numCards of given rank is at least 2 (greater than 1).
+            // If it is, increment the number of pairs.
+            // Find the number of cards of the rank. Do this by calling numCards of rank on rank.
+            if (numCardsOfRank(rank) > 1){
+                numPairs++;
+            }
+            if (numPairs > 1){
                 return true;
             }
         }
-        // If we haven't returned true for any of the ranks, then
-        // return false.
+        // If I haven't returned yet, then return false.
         return false;
+    }
+
+    /** A method that returns true if the Hand includes at least one pair of cards with the same rank,
+     * and false if it does not
+     */
+    public boolean hasPair(){
+        // Loop through the ranks 1--13, inclusive.
+        for (int rank = 1; rank < 14; rank++) {
+            // For each rank, see if the numCards of given rank is at least 2 (greater than 1). If it is, return true.
+            // Find the number of cards of the rank. Do this by calling numCards of rank on rank.
+            if (numCardsOfRank(rank) > 1){
+                return true;
+            }
+        }
+        // If I haven't returned yet, then return false.
+        return false;
+    }
+
+    public Card highCard(){
+        // Consider the leftmost card.
+        Card card = cards[0];
+        // Store its value.
+        int cardValue = card.getValue();
+        // The leftmost card is the highest seen so far.
+        Card highestCard = card;
+        // The largest value seen so far is the value of the leftmost card.
+        int largestValue = cardValue;
+        for (int i = 1; i < numCards; i++) {
+            card = cards[i]; // Consider the next card.
+            cardValue = card.getValue();
+            if (cardValue > largestValue) {
+                largestValue = cardValue;
+                highestCard = card;
+            }
+        }
+        return highestCard;
     }
 }
